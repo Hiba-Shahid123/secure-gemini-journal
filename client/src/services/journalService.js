@@ -11,12 +11,13 @@ import {
 import { db } from "../firebase";
 
 // Save a journal entry
-export const saveJournalEntry = async (userId, text) => {
+export const saveJournalEntry = async (userId, text, mood) => {
   const entriesRef = collection(db, "journalEntries");
 
   await addDoc(entriesRef, {
     userId: userId,
     text: text,
+    mood: mood,
     createdAt: serverTimestamp()
   });
 };

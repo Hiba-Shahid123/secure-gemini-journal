@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
 
 app.post("/api/gemini", async (req, res) => {
   try {
-    const { text } = req.body;
+    const { text, mood } = req.body;
 
     if (!text || !text.trim()) {
       return res.status(400).json({
@@ -29,16 +29,24 @@ app.post("/api/gemini", async (req, res) => {
       });
     }
 
+    const selectedMood = mood || "Not specified";
+
     const response = await ai.models.generateContent({
       model: "gemini-3.5-flash",
       contents: `You are a supportive personal journal assistant.
 
-Read the following journal entry and provide:
+The user has shared a journal entry and their current mood.
+
+Provide:
 1. A short reflection on what the user expressed.
-2. One helpful observation.
+2. One helpful observation that takes their mood into account.
 3. One gentle suggestion for moving forward.
 
+Be supportive, warm, and concise.
 Do not diagnose medical or mental health conditions.
+
+Current mood:
+${selectedMood}
 
 Journal entry:
 ${text}`
@@ -52,7 +60,7 @@ ${text}`
     console.error("Gemini error:", error);
 
     res.status(500).json({
-      error: "Gemini request failed."
+      error: error.message || "Gemini request failed."
     });
   }
 });

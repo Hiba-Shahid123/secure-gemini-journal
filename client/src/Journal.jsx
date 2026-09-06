@@ -7,11 +7,20 @@ import {
 
 function Journal() {
   const [text, setText] = useState("");
+  const [mood, setMood] = useState("");
   const [entries, setEntries] = useState([]);
   const [message, setMessage] = useState("");
   const [aiReply, setAiReply] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
   const [loadingEntries, setLoadingEntries] = useState(true);
+
+  const moods = [
+    { emoji: "😊", label: "Happy" },
+    { emoji: "😌", label: "Calm" },
+    { emoji: "😐", label: "Okay" },
+    { emoji: "😔", label: "Sad" },
+    { emoji: "😣", label: "Stressed" }
+  ];
 
   // Load entries from Firebase
   const loadEntries = async (user) => {
@@ -58,6 +67,11 @@ function Journal() {
       return;
     }
 
+    if (!mood) {
+      setMessage("Please select your mood first.");
+      return;
+    }
+
     const user = auth.currentUser;
 
     if (!user) {
@@ -68,9 +82,14 @@ function Journal() {
     try {
       setMessage("");
 
-      await saveJournalEntry(user.uid, text.trim());
+      await saveJournalEntry(
+        user.uid,
+        text.trim(),
+        mood
+      );
 
       setText("");
+      setMood("");
       setAiReply("");
       setMessage("Journal entry saved!");
 
@@ -88,6 +107,11 @@ function Journal() {
       return;
     }
 
+    if (!mood) {
+      setMessage("Please select your mood first.");
+      return;
+    }
+
     setAiLoading(true);
     setAiReply("");
     setMessage("");
@@ -99,7 +123,8 @@ function Journal() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          text: text.trim()
+          text: text.trim(),
+          mood: mood
         })
       });
 
@@ -123,6 +148,7 @@ function Journal() {
 
       {/* Writing Section */}
       <section className="journal-card">
+
         <div className="card-header">
           <div>
             <p className="eyebrow">TODAY'S ENTRY</p>
@@ -141,6 +167,40 @@ function Journal() {
             value={text}
             onChange={(e) => setText(e.target.value)}
           />
+
+          {/* Mood Check-In */}
+          <div className="mood-section">
+
+            <p className="mood-title">
+              How are you feeling today?
+            </p>
+
+            <div className="mood-options">
+
+              {moods.map((item) => (
+
+                <button
+                  type="button"
+                  key={item.label}
+                  className={`mood-btn ${
+                    mood === item.label ? "selected" : ""
+                  }`}
+                  onClick={() => setMood(item.label)}
+                >
+                  <span className="mood-emoji">
+                    {item.emoji}
+                  </span>
+
+                  <span className="mood-label">
+                    {item.label}
+                  </span>
+                </button>
+
+              ))}
+
+            </div>
+
+          </div>
 
           <div className="journal-actions">
 
@@ -171,19 +231,23 @@ function Journal() {
             {message}
           </div>
         )}
+
       </section>
 
       {/* AI Loading */}
       {aiLoading && (
         <section className="ai-card">
+
           <div className="ai-title">
             <span>✨</span>
             <h2>Gemini is thinking...</h2>
           </div>
 
           <p className="loading-text">
-            Analyzing your thoughts and preparing a reflection.
+            Using your journal entry and mood to prepare a
+            personalized reflection.
           </p>
+
         </section>
       )}
 
@@ -207,6 +271,7 @@ function Journal() {
       <section className="entries-section">
 
         <div className="section-heading">
+
           <div>
             <p className="eyebrow">YOUR JOURNAL</p>
             <h2>Previous Entries</h2>
@@ -216,12 +281,14 @@ function Journal() {
             {entries.length}{" "}
             {entries.length === 1 ? "entry" : "entries"}
           </span>
+
         </div>
 
         {/* Loading */}
         {loadingEntries ? (
 
           <div className="empty-state">
+
             <div className="empty-icon">⏳</div>
 
             <h3>Loading your entries...</h3>
@@ -229,11 +296,11 @@ function Journal() {
             <p>
               Your private journal entries are being loaded.
             </p>
+
           </div>
 
         ) : entries.length === 0 ? (
 
-          /* No Entries */
           <div className="empty-state">
 
             <div className="empty-icon">📖</div>
@@ -241,14 +308,14 @@ function Journal() {
             <h3>No entries yet</h3>
 
             <p>
-              Your journal entries will appear here after you save them.
+              Your journal entries will appear here after you
+              save them.
             </p>
 
           </div>
 
         ) : (
 
-          /* Entries */
           <div className="entries-list">
 
             {entries.map((entry) => (
@@ -277,6 +344,12 @@ function Journal() {
                 <p className="entry-text">
                   {entry.text}
                 </p>
+
+                {entry.mood && (
+                  <div className="entry-mood">
+                    Mood: {entry.mood}
+                  </div>
+                )}
 
               </article>
 
