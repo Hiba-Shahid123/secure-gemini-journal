@@ -1,0 +1,24 @@
+{
+  "name": "secure-gemini-journal",
+  "version": "1.0.0",
+  "description": "A secure AI-powered personal journal built for the Hack2Skill Gen AI Academy APAC Ideathon.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hiba-Shahid123/secure-gemini-journal.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Hiba-Shahid123/secure-gemini-journal/issues"
+  },
+  "homepage": "https://github.com/Hiba-Shahid123/secure-gemini-journal#readme",
+  "dependencies": {
+    "@google/genai": "^2.21.0"
+  }
+}

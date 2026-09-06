@@ -22,7 +22,6 @@ function Journal() {
     { emoji: "😣", label: "Stressed" }
   ];
 
-  // Load entries from Firebase
   const loadEntries = async (user) => {
     if (!user) {
       setEntries([]);
@@ -44,7 +43,6 @@ function Journal() {
     }
   };
 
-  // Wait for Firebase authentication
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
@@ -58,7 +56,6 @@ function Journal() {
     return () => unsubscribe();
   }, []);
 
-  // Save journal entry
   const handleSave = async (e) => {
     e.preventDefault();
 
@@ -100,7 +97,6 @@ function Journal() {
     }
   };
 
-  // Get Gemini reflection
   const handleGemini = async () => {
     if (!text.trim()) {
       setMessage("Please write something first.");
@@ -117,7 +113,7 @@ function Journal() {
     setMessage("");
 
     try {
-      const response = await fetch("http://localhost:3000/api/gemini", {
+      const response = await fetch("/api/gemini", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -146,7 +142,6 @@ function Journal() {
   return (
     <div className="journal-page">
 
-      {/* Writing Section */}
       <section className="journal-card">
 
         <div className="card-header">
@@ -168,7 +163,6 @@ function Journal() {
             onChange={(e) => setText(e.target.value)}
           />
 
-          {/* Mood Check-In */}
           <div className="mood-section">
 
             <p className="mood-title">
@@ -234,7 +228,6 @@ function Journal() {
 
       </section>
 
-      {/* AI Loading */}
       {aiLoading && (
         <section className="ai-card">
 
@@ -251,7 +244,6 @@ function Journal() {
         </section>
       )}
 
-      {/* AI Reflection */}
       {aiReply && !aiLoading && (
         <section className="ai-card">
 
@@ -267,7 +259,6 @@ function Journal() {
         </section>
       )}
 
-      {/* Previous Entries */}
       <section className="entries-section">
 
         <div className="section-heading">
@@ -284,7 +275,6 @@ function Journal() {
 
         </div>
 
-        {/* Loading */}
         {loadingEntries ? (
 
           <div className="empty-state">
