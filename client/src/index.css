@@ -1,0 +1,443 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  background: #f6f3ff;
+  color: #252238;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar {
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 7%;
+  background: rgba(255, 255, 255, 0.9);
+  border-bottom: 1px solid #e8e3f3;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.brand-icon,
+.logo-large {
+  color: #7c5cff;
+}
+
+.brand-icon {
+  font-size: 25px;
+}
+
+.logout-btn {
+  border: 1px solid #ddd6f3;
+  background: white;
+  color: #5d4b91;
+  padding: 9px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.logout-btn:hover {
+  background: #f1edff;
+}
+
+.main-content {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 55px 25px;
+  flex: 1;
+}
+
+.dashboard {
+  width: 100%;
+}
+
+.welcome {
+  margin-bottom: 35px;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: #7c5cff;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.welcome h1 {
+  margin: 0 0 10px;
+  font-size: 42px;
+  letter-spacing: -1px;
+}
+
+.welcome p:last-child {
+  margin: 0;
+  color: #756f86;
+  font-size: 16px;
+  max-width: 650px;
+  line-height: 1.6;
+}
+
+.auth-container {
+  max-width: 480px;
+  margin: 20px auto;
+}
+
+.auth-heading {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo-large {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.auth-heading h1 {
+  margin: 0 0 12px;
+  font-size: 36px;
+}
+
+.auth-heading > p:last-child {
+  color: #756f86;
+  line-height: 1.6;
+}
+
+.auth-card {
+  background: white;
+  padding: 32px;
+  border-radius: 20px;
+  border: 1px solid #e8e3f3;
+  box-shadow: 0 15px 45px rgba(72, 55, 120, 0.08);
+}
+
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.auth-card input {
+  width: 100%;
+  padding: 13px 15px;
+  border: 1px solid #ddd8e8;
+  border-radius: 10px;
+  outline: none;
+}
+
+.auth-card input:focus {
+  border-color: #7c5cff;
+}
+
+.auth-card button {
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #7c5cff;
+  color: white;
+  font-weight: 700;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 25px 0;
+  color: #9992aa;
+  font-size: 13px;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  height: 1px;
+  background: #e8e3f3;
+  flex: 1;
+}
+
+.footer {
+  text-align: center;
+  padding: 25px;
+  color: #8b8598;
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    padding: 0 20px;
+  }
+
+  .main-content {
+    padding: 35px 18px;
+  }
+
+  .welcome h1 {
+    font-size: 32px;
+  }
+
+  .auth-heading h1 {
+    font-size: 29px;
+  }
+
+  .auth-card {
+    padding: 22px;
+  }
+}
+/* =========================
+   JOURNAL DASHBOARD
+========================= */
+
+.journal-page {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.journal-card,
+.ai-card,
+.entry-card,
+.empty-state {
+  background: white;
+  border: 1px solid #e8e3f3;
+  border-radius: 20px;
+  box-shadow: 0 12px 35px rgba(72, 55, 120, 0.06);
+}
+
+.journal-card {
+  padding: 30px;
+}
+
+.card-header,
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.card-header h2,
+.section-heading h2,
+.ai-title h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.writing-icon {
+  font-size: 30px;
+}
+
+.journal-textarea {
+  width: 100%;
+  min-height: 220px;
+  resize: vertical;
+  padding: 20px;
+  border: 1px solid #ddd8e8;
+  border-radius: 15px;
+  background: #fcfbff;
+  color: #252238;
+  outline: none;
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+.journal-textarea:focus {
+  border-color: #7c5cff;
+  box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.1);
+}
+
+.journal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.save-btn,
+.ai-btn {
+  border: none;
+  border-radius: 11px;
+  padding: 13px 20px;
+  font-weight: 700;
+  transition: 0.2s;
+}
+
+.save-btn {
+  background: #7c5cff;
+  color: white;
+}
+
+.save-btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
+}
+
+.ai-btn {
+  background: #eeeaff;
+  color: #6849d8;
+}
+
+.ai-btn:hover {
+  background: #e4ddff;
+  transform: translateY(-1px);
+}
+
+.status-message {
+  margin-top: 15px;
+  padding: 12px 15px;
+  border-radius: 10px;
+  background: #f4f1ff;
+  color: #6249b5;
+  font-size: 14px;
+}
+
+.ai-card {
+  padding: 28px;
+}
+
+.ai-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.ai-title span {
+  font-size: 25px;
+}
+
+.loading-text {
+  color: #756f86;
+  margin: 0;
+}
+
+.ai-response {
+  white-space: pre-wrap;
+  line-height: 1.8;
+  color: #454052;
+  background: #faf9ff;
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.entries-section {
+  margin-top: 5px;
+}
+
+.entry-count {
+  background: #eeeaff;
+  color: #6849d8;
+  padding: 7px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.entries-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.entry-card {
+  padding: 22px;
+  transition: 0.2s;
+}
+
+.entry-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(72, 55, 120, 0.09);
+}
+
+.entry-top {
+  margin-bottom: 10px;
+}
+
+.entry-label {
+  color: #8b7ac7;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.entry-text {
+  margin: 0;
+  color: #454052;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.empty-state {
+  padding: 50px 25px;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 45px;
+  margin-bottom: 12px;
+}
+
+.empty-state h3 {
+  margin: 0 0 8px;
+  font-size: 20px;
+}
+
+.empty-state p {
+  margin: 0;
+  color: #8b8598;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+
+  .journal-card,
+  .ai-card {
+    padding: 20px;
+  }
+
+  .card-header h2,
+  .section-heading h2,
+  .ai-title h2 {
+    font-size: 20px;
+  }
+
+  .journal-actions {
+    flex-direction: column;
+  }
+
+  .save-btn,
+  .ai-btn {
+    width: 100%;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
